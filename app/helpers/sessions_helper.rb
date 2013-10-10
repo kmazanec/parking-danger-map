@@ -9,5 +9,5 @@ module SessionsHelper
   end
 
   def start_session
-
+  end
 end
