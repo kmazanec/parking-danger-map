@@ -11,7 +11,7 @@ class MapsController < ApplicationController
     dataPoints = @locations.map do |location|
       [location.latitude, location.longitude]
     end
-    dataPoints.to_json
+    render :json => dataPoints.to_json
   end
 
 end

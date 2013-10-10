@@ -1,14 +1,6 @@
 // Adding 500 Data Points
 var map, heatmap;
 
- var taxiData = [
-    new google.maps.LatLng(23.56765,-110.45654),
-    new google.maps.LatLng(24.4565,-112.34545),
-    new google.maps.LatLng(22.54343,-111.34544),
-    new google.maps.LatLng(21.45434,-109.65465)
-    
-  ];
-
 function initialize() {
   var mapOptions = {
     zoom: 13,
@@ -16,10 +8,23 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.SATELLITE
   };
 
+  var parkingData = []
+  $.get('/map_data',function(response){
+    console.log(response);
+
+    // var parkingData =
+        for (var i=0; i<response.length; i++){
+          parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1])
+        };
+
+    console.log(parkingData);
+
+  });
+
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  var pointArray = new google.maps.MVCArray(taxiData);
+  var pointArray = new google.maps.MVCArray(parkingData);
 
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: pointArray
