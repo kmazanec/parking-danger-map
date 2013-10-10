@@ -1,9 +1,13 @@
 class TicketsController < ApplicationController
 
   def create
-    p params[:location]
-    p params[:email]
-    p params[:ticket]
+    # p params[:location]
+    # p params[:email]
+    # p params[:ticket]
+
+    if true#!logged_in?
+      redirect_to :root
+    end
 
     # If already logged in
       # use current user
@@ -15,9 +19,9 @@ class TicketsController < ApplicationController
       # create a new anonymous user
       # save user id in session
 
-    @user.tickets.build(ticket_params)
-    # @new_ticket = Ticket.create(ticket_params)
-    redirect_to user_path(@user)
+    # current_user.tickets.build(ticket_params)
+    # # @new_ticket = Ticket.create(ticket_params)
+    # redirect_to user_path(current_user)
   end
 
   private
