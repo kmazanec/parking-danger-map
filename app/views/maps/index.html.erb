@@ -1,4 +1,4 @@
-<div class="map_container">
+<div id="map-canvas">
 
 </div>
 
@@ -25,3 +25,21 @@
 
   <%= f.submit %>
 <% end -%>
+
+<script type="text/javascript">
+  var parkingData = <%= put a call to a controller, which collects our data set %>
+
+  // var taxiData = [
+  //   new google.maps.LatLng(23.56765,-110.45654),
+  //   new google.maps.LatLng(24.4565,-112.34545),
+  //   new google.maps.LatLng(22.54343,-111.34544),
+  //   new google.maps.LatLng(21.45434,-109.65465)
+    
+  // ];
+
+  function initMap(event) {
+    initialize(taxiData);
+  }
+
+  google.maps.event.addDomListener(window, 'load', initMap);
+</script>
