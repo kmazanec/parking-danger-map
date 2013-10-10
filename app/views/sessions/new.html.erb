@@ -1,0 +1,19 @@
+<h1>Login</h1>
+<% if @error %>
+  <p><%= @error %></p>
+<% end %>
+
+<% if current_user %>
+  <p>You're already logged in!</p>
+<% else %>
+  <%= form_tag login_path, :id => "login" do %>
+    <%= label_tag "Email", :email %>
+    <%= text_field_tag :email %>
+
+    <%= label_tag "Password", :password %>
+    <%= password_field_tag :password %>
+
+    <%= submit_tag "Login" %>
+
+  <% end %>
+<% end %>
