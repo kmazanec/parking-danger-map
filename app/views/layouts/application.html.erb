@@ -7,6 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
   <nav>
   <ul>
   <% if logged_in? %>
@@ -16,7 +17,7 @@
   <% end %>
     <li><button id="signup">Sign Up</button></li>
   </ul>
-</nav>  
+</nav>
 
 <%= yield %>
 
