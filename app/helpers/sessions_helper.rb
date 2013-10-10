@@ -5,9 +5,11 @@ module SessionsHelper
   end
 
   def logged_in?
-    return true if session[:logged_in?] = true
+    !current_user.nil?
   end
 
-  def start_session
+
+  def passwords_match?(password, password_confirmation)
+    password == password_confirmation
   end
 end
