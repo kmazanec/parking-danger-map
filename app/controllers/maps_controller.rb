@@ -5,13 +5,13 @@ class MapsController < ApplicationController
   end
 
   def map_data
+    # remember to add a route for this get request
     @locations = Location.all
-    content_type :json
-    {locations:  
-    @locations.map do |location|
-      {latitude: location.latitude, longitude: location.longitude}
+     
+    dataPoints = @locations.map do |location|
+      [location.latitude, location.longitude]
     end
-    }.to_json
+    dataPoints.to_json
   end
 
 end
