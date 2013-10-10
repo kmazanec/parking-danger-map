@@ -1,0 +1,3 @@
+class AnonymousUser < User
+
+end
