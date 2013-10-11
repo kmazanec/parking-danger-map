@@ -1,0 +1,24 @@
+<h1>Edit Account info.</h1>
+
+<%= form_for :user, url: user_path(@user), method: :patch do |f| %>
+  <p>
+    <%= f.label :email %> <br \>
+    <%= f.email_field :email %>
+  </p>
+
+  <p>
+    <%= f.label :password %> <br \>
+    <%= f.email_field :password %>
+  </p>
+
+  <p>
+    <%= f.label :password_confirmation %> <br \>
+    <%= f.email_field :password_confirmation %>
+  </p>
+
+
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

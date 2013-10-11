@@ -3,7 +3,7 @@ ParkingDangerMap::Application.routes.draw do
   post '/login' => 'sessions#create'
   delete "/logout" => "sessions#destroy"
   get '/map_data' => 'maps#map_data'
-
+  get '/signup' => 'users#new'
 
   root 'maps#index'
 
