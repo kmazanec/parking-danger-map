@@ -1,11 +1,17 @@
 class TicketsController < ApplicationController
 
   def create
+
     # p params[:location]
     # p params[:email]
     # p params[:ticket]
 
-    if true#!logged_in?
+    if !logged_in?
+      redirect_to :root
+    else
+      ticket = current_user.tickets.build(ticket_params)
+      ticket.location = Location.create(user_submission: params[:location])
+      current_user.save!
       redirect_to :root
     end
 
@@ -19,9 +25,9 @@ class TicketsController < ApplicationController
       # create a new anonymous user
       # save user id in session
 
-    # current_user.tickets.build(ticket_params)
+
     # # @new_ticket = Ticket.create(ticket_params)
-    # redirect_to user_path(current_user)
+
   end
 
   private
