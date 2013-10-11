@@ -5,12 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+class Seeder < ActiveMDB::Base
 
-require 'csv'
-
-CSV.foreach('db/test.csv') do |row|
-  Location.create(latitude: row[0], longitude: row[1])
+  set_mdb_file '/db/ParkingTickets.mdb'
 end
 
-'this'
-&quot;this&quot;
+headers = Seeder.column_names
+
+p headers
+
+
+
