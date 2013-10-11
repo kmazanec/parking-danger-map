@@ -29,3 +29,5 @@ Additional notes
   - This feature was punted due to complexity of implementation for MVP
 
   - Additional form of authentication in the form of Twitter OAuth was also punted
+
+  - A list of all fines in chicago can be find here: http://www.cityofchicago.org/city/en/depts/fin/supp_info/revenue/parking_meter_information/parking_and_standingviolations.html
