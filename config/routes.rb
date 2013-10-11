@@ -2,9 +2,11 @@ ParkingDangerMap::Application.routes.draw do
   get "/login" => "sessions#new"
   post '/login' => 'sessions#create'
   delete "/logout" => "sessions#destroy"
+  get '/map_data' => 'maps#map_data'
 
 
   root 'maps#index'
+
 
   resources 'tickets'
   resources 'users'

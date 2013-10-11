@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require 'csv'
+
+CSV.foreach('db/test.csv') do |row|
+  Location.create(latitude: row[0], longitude: row[1])
+end
+
+'this'
+&quot;this&quot;
