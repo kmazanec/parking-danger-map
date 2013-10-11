@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  before_filter :require_login #, :id_check
+
+  def require_login
+    redirect_to root_url unless current_user 
+  end
+
 end
