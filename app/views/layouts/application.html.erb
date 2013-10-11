@@ -13,12 +13,23 @@
 
   <nav>
   <ul>
-  <% if logged_in? %>
-    <li><%= link_to "Logout", session_path(current_user.id), method: :delete %></li>
-    <li><%= link_to "Profile",(current_user.id) %></li>
-    <li><%= link_to "Home", (current_user.id) %></li>
+  <% if current_user %>
+    <li><%= link_to "Logout", logout_path(current_user.id), method: :delete %></li>
+    <li><%= link_to "Profile", user_path(current_user.id) %></li>
+    <li><%= link_to "Home", root_url %></li>
+    <% else %>
+    <li><%= link_to '<button type="button" id="signup">Sign up</button>'.html_safe, signup_path %></li>
+    
+    
+    <li><div class="form">
+        <%= form_tag login_path do %>
+          <%= email_field_tag :email %>
+          <%= password_field_tag :password %>
+          <%= submit_tag "Log in"%>
+        <% end %>
+      </div> </li>
   <% end %>
-    <li><button id="signup">Sign Up</button></li>
+    
   </ul>
 </nav>
 

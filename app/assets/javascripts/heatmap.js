@@ -3,9 +3,9 @@ var map, heatmap;
 
 function initialize() {
   var mapOptions = {
-    zoom: 13,
-    center: new google.maps.LatLng(37.774546, -122.433523),
-    mapTypeId: google.maps.MapTypeId.SATELLITE
+    zoom: 12,
+    center: new google.maps.LatLng(40.7833, -73.9667),
+    mapTypeId: google.maps.MapTypeId.MAP
   };
 
   var parkingData = []
@@ -31,9 +31,15 @@ function initialize() {
   });
 
   heatmap.setMap(map);
+
+  google.maps.event.addListener(map, "click", function(event) {
+    var lat = event.latLng.lat();
+    var lng = event.latLng.lng();
+    // populate yor box/field with lat, lng
+    $("#location").val(lat + '; ' + lng);
+    // alert("Lat=" + lat + "; Lng=" + lng);
+  });
 }
-
-
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
