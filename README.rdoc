@@ -1,28 +1,31 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Parking Danger Map
+------------------
 
-Things you may want to cover:
+Description: Helpful app to report parking tickets you receive and view a heat map of parking violation danger zones.
 
-* Ruby version
+Specs:
 
-* System dependencies
+- Two views
+  - Main view contains dynamic google map that reads hotspot data and user submission form
+  - Second view contains user profile - will include user information and all previously submitted tickets
 
-* Configuration
+- Pending features
+  - See trello board
 
-* Database creation
+Technologies used
+  - Google maps api
+  - Geocoder gem
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Extra Files
+  - CSV file of parking ticket data from NYC
+  - CSV file of sample data from Google maps
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Additional notes
+  - AnonymousUser and VerifiedUser
+  - Initial thought process included three different aliases of User via Single Table Inheritance, that would allow users to create tickets anonymously and later claim their account based on the cookie stored on their computer (session).
+  - This feature was punted due to complexity of implementation for MVP
+
+  - Additional form of authentication in the form of Twitter OAuth was also punted
