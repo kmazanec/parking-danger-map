@@ -26,4 +26,6 @@ ParkingDangerMap::Application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+
+  # Geocoder.configure(lookup: :bing, api_key: "Aihaj9Jiayuc0yJFB7fYlbFrNTo5oVydm5hxXT97h7fZQ1UOT_8xSbBpsvfnRySN")
 end

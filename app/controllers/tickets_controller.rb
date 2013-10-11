@@ -7,7 +7,11 @@ class TicketsController < ApplicationController
     else
       begin
         ticket = current_user.tickets.build(ticket_params)
+        puts "THESE ARE THe PARAMS +++++++++++++++++++++++++++++++++++++"
+        puts params[:location]
+        puts "THESE ARE THe PARAMS +++++++++++++++++++++++++++++++++++++"
         ticket.location = Location.create(user_submission: params[:location])
+        puts ticket.location
         current_user.save!
       rescue ActionController::ParameterMissing
         flash[:notice] = "Invalid parameters"
