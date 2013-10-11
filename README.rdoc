@@ -11,10 +11,21 @@ Specs:
   - Main view contains dynamic google map that reads hotspot data and user submission form
   - Second view contains user profile - will include user information and all previously submitted tickets
 
-- Pending feature
+- Pending features
   - See trello board
 
 Technologies used
   - Google maps api
   - Geocoder gem
+
+Extra Files
   - CSV file of parking ticket data from NYC
+  - CSV file of sample data from Google maps
+
+
+Additional notes
+  - AnonymousUser and VerifiedUser
+  - Initial thought process included three different aliases of User via Single Table Inheritance, that would allow users to create tickets anonymously and later claim their account based on the cookie stored on their computer (session).
+  - This feature was punted due to complexity of implementation for MVP
+
+  - Additional form of authentication in the form of Twitter OAuth was also punted
