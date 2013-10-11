@@ -31,9 +31,14 @@ function initialize() {
   });
 
   heatmap.setMap(map);
+
+  google.maps.event.addListener(map, "click", function(event) {
+    var lat = event.latLng.lat();
+    var lng = event.latLng.lng();
+    // populate yor box/field with lat, lng
+    alert("Lat=" + lat + "; Lng=" + lng);
+  });
 }
-
-
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
