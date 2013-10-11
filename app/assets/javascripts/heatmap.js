@@ -36,7 +36,8 @@ function initialize() {
     var lat = event.latLng.lat();
     var lng = event.latLng.lng();
     // populate yor box/field with lat, lng
-    alert("Lat=" + lat + "; Lng=" + lng);
+    $("#location").val(lat + '; ' + lng);
+    // alert("Lat=" + lat + "; Lng=" + lng);
   });
 }
 
