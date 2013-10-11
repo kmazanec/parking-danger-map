@@ -3,9 +3,9 @@ var map, heatmap;
 
 function initialize() {
   var mapOptions = {
-    zoom: 13,
-    center: new google.maps.LatLng(37.774546, -122.433523),
-    mapTypeId: google.maps.MapTypeId.SATELLITE
+    zoom: 12,
+    center: new google.maps.LatLng(40.7833, -73.9667),
+    mapTypeId: google.maps.MapTypeId.MAP
   };
 
   var parkingData = []
