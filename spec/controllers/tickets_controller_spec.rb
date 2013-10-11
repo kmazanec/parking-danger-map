@@ -34,12 +34,12 @@ describe TicketsController do
       end
 
       it "should create a new ticket" do
-
         expect{ post :create, dummy_ticket }.to change{Ticket.count}
       end
 
       it "should redirect back to the homepage with errors if ticket creation fails" do
-
+        post :create, {}
+        expect(flash[:notice]).not_to eq(nil)
       end
     end
   end
