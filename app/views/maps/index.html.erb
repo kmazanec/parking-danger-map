@@ -6,22 +6,22 @@
 
 <%= form_for @ticket do |f| %>
   <%= label_tag :location, "Location (address or cross street)" %>
-  <%= text_field_tag :location %>
-
-  <%= f.label :fine, "What's the damage? (how deep?)" %>
-  <%= f.text_field :fine %>
-
-  <%= f.label :officer, "Who wrote the ticket? (that jerk)" %>
-  <%= f.text_field :officer %>
+  <%= text_field_tag :location, nil, required: true, placeholder: "required" %>
 
   <%= f.label :issued_at, "When did they write this ticket?" %>
   <%= f.date_field :issued_at %>
 
+  <%= f.label :fine, "What's the damage? (how deep?)" %>
+  <%= f.text_field :fine, placeholder: "optional" %>
+
+  <%= f.label :officer, "Who wrote the ticket? (that jerk)" %>
+  <%= f.text_field :officer, placeholder: "optional" %>
+
   <%= f.label :status, "What is the status of your ticket?" %>
   <%= f.select :status, ["Unpaid", "Contested", "Paid", "Resolved"]  %>
 
-  <%= label_tag :email, "Email (optional)" %>
-  <%= email_field_tag :email %>
+  <%= label_tag :email, "Email" %>
+  <%= email_field_tag :email, nil, placeholder: "optional" %>
 
   <%= f.submit %>
 <% end -%>
