@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe "Profile Page" do
+describe "User#Show" do
 
-  context 'with a user signed in' do 
-    before :each do
+  context 'when not signed in'
+
+  context 'when signed in' do 
+      
       @user = User.create({email: 'test@mail.com', password: 'test', password_confirmation: 'test'})
+
+    before :each do
       visit root_path
       log_in_with 'test@mail.com', 'test'
     end
@@ -32,6 +36,10 @@ describe "Profile Page" do
         visit user_path(@user)
         expect(page).to have_css(".ticket", count: 2)
       end
+
+      describe
+      subject { visit user_path(@user) }
+      it {
 
       context 'displays ticket information' do
         before do
