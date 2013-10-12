@@ -14,7 +14,10 @@ class ApplicationController < ActionController::Base
   before_filter :require_login #, :id_check
 
   def require_login
-    redirect_to root_url unless current_user 
+    unless current_user
+      flash[:notice] = "Please log in or sign up in order to view that page."
+      redirect_to root_url
+    end
   end
 
 end

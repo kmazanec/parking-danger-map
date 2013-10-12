@@ -1,9 +1,13 @@
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+
 <div id="map-canvas">
 
 </div>
 
 
-
+<div id="ticket_form">
 <%= form_for @ticket do |f| %>
   <%= label_tag :location, "Location (address or cross street)" %>
   <%= text_field_tag :location, nil, required: true, placeholder: "required" %>
@@ -25,3 +29,4 @@
 
   <%= f.submit %>
 <% end -%>
+</div>
