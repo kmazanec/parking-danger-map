@@ -22,13 +22,13 @@ if ENV['SEED_DATA'] == 'set1'
 
   puts db.execute "SELECT * FROM sqlite_master WHERE type='table'"
 
-  5.times do
+  500.times do
 
     puts "Importing record #{current_number + 10} of #{number_of_rows} (#{(current_number.to_f/number_of_rows.to_f).round(3)*100}% done)"
     results =  (db.execute "SELECT * FROM #{table} LIMIT #{chunk_size} OFFSET #{current_number}")
     results.each do |row|
-      Location.create(user_submission: "#{row[10].strip} #{row[11].strip}, New York, NY")
-      # p row
+      loc = Location.create(user_submission: "#{row[10].strip} #{row[11].strip}, New York, NY")
+      Ticket.create(user_id: 1, location_id: loc.id, issued_at: row[4].strip.to_datetime, fine: row[7].strip.to_i, violation: row[5].squeeze(" ") )
     end
     current_number += chunk_size
 

@@ -39,9 +39,27 @@ function initialize() {
     $("#location").val(lat + '; ' + lng);
     // alert("Lat=" + lat + "; Lng=" + lng);
   });
-}
 
+   google.maps.event.addListener(map, 'idle', function(e) {
+                  var bounds =  map.getBounds();
+                  var ne = bounds.getNorthEast();
+                  var sw = bounds.getSouthWest();
+                 console.log(ne);
+                 console.log(sw);
+         });
+}
+// var bounds = map.getBounds();
+// console.log(bounds);
+// var ne = bounds.getNorthEast();
+// console.log(ne);
 google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+// console.log(ne)
+// console.log(sw)
+
 
 
 // function toggleHeatmap() {
