@@ -8,18 +8,6 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.MAP
   };
 
-  var parkingData = []
-  $.get('/map_data',function(response){
-    console.log(response);
-
-    // var parkingData =
-        for (var i=0; i<response.length; i++){
-          parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1])
-        };
-
-    console.log(parkingData);
-
-  });
 
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -40,14 +28,33 @@ function initialize() {
     // alert("Lat=" + lat + "; Lng=" + lng);
   });
 
-   google.maps.event.addListener(map, 'idle', function(e) {
-                  var bounds =  map.getBounds();
-                  var ne = bounds.getNorthEast();
-                  var sw = bounds.getSouthWest();
-                 console.log(ne);
-                 console.log(sw);
+  var parkingData = [];
+
+  $.get('/map_data', function(response){
+    console.log(response);
+
+    // var parkingData =
+        for (var i=0; i<response.length; i++){
+          parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1]);
+        }
+
+
+  });
+   google.maps.event.addListener(map, 'idle', function() {
+          var bounds = map.getBounds();
+          var ne = bounds.getNorthEast();
+          var latitude = ne.lb;
+          var longitude = ne.mb;
+          var latitudeLongitudeData =  { lat: latitude, long: longitude };
+          $.post('/map_data_tile', latitudeLongitudeData, function(){
+            console.log("here we are");
+
+          });
+
          });
 }
+
+
 // var bounds = map.getBounds();
 // console.log(bounds);
 // var ne = bounds.getNorthEast();
