@@ -22,8 +22,42 @@ describe "Profile Page" do
     end
 
     context 'with tickets associated' do
-      it "lists out two tickets" do
-        @user.tickets.build()
+      before do
+        visit root_path
+        create_ticket_with('East 74th Street and Lexington Ave', '10/10/2013', '100', 'Officer Taco', 'Unpaid', @user.email)
+        create_ticket_with('East 74th Street and Park Ave', '10/09/2013', '75', 'Officer Taco', 'Unpaid', @user.email)
+      end
+
+      it 'lists out two tickets' do
+        visit user_path(@user)
+        expect(page).to have_css(".ticket", count: 2)
+      end
+
+      context 'displays ticket information' do
+        before do
+          visit user_path(@user)
+        end
+
+        it 'displays the ticket location' do
+          expect(page).to have_content('Ticket Location: East 74th Street and Park Ave')
+        end
+
+        it 'displays the ticket date' do
+          expect(page).to have_content('Date Issued: 10/10/2013')
+        end
+
+        it 'displays the ticket fine amount' do
+          expect(page).to have_content('Fine Amount: $100')
+        end
+
+        it 'displays the ticket issuing officer' do
+          expect(page).to have_content('Officer Name: Officer Taco')
+        end
+
+        it 'displays the ticket status' do
+          expect(page).to have_content('Ticket Status: Unpaid')
+        end
+
       end
     end
   end
