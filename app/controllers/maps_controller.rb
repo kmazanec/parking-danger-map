@@ -6,8 +6,8 @@ class MapsController < ApplicationController
 
   def map_data
     # remember to add a route for this get request
-    @locations = Location.all
-     
+    @locations = Location.limit(800)
+
     dataPoints = @locations.map do |location|
       [location.latitude, location.longitude]
     end
