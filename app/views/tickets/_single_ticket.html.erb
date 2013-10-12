@@ -1,4 +1,9 @@
 <div class="ticket">
-  <span>Ticket Location: <%= ticket.location. %> </span>
+  <span>Ticket Location: <%= ticket.location.user_submission %> &nbsp;&nbsp;&nbsp;</span>
+  <span>Date Issued: <%= ticket.issued_at.strftime("%m/%d/%Y") %> &nbsp;&nbsp;&nbsp;</span>  
+  <span>Fine Amount: $<%= ticket.fine %> &nbsp;&nbsp;&nbsp;</span>
+  <span>Issuing Officer: <%= ticket.officer %> &nbsp;&nbsp;&nbsp;</span>
+  <span>Ticket Status: <%= ticket.status %> &nbsp;&nbsp;&nbsp;</span>
+
 
 </div>

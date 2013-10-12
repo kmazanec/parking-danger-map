@@ -51,7 +51,7 @@ describe "Profile Page" do
         end
 
         it 'displays the ticket issuing officer' do
-          expect(page).to have_content('Officer Name: Officer Taco')
+          expect(page).to have_content('Issuing Officer: Officer Taco')
         end
 
         it 'displays the ticket status' do
