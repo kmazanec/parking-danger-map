@@ -4,8 +4,11 @@ ParkingDangerMap::Application.routes.draw do
   delete "/logout" => "sessions#destroy"
   get '/map_data' => 'maps#map_data'
   get '/signup' => 'users#new'
+  post 'map_data_tile' => 'maps#map_data_tile'
+
 
   root 'maps#index'
+
 
 
   resources 'tickets'
