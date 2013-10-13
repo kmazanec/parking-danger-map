@@ -19,6 +19,17 @@ class TicketsController < ApplicationController
 
   end
 
+  def update
+    redirect_to "http://www.google.com"
+    # if !logged_in?
+    #   redirect_to :root
+    # else
+    #   begin
+    #     ticket = current_user.tickets.find()
+    #   end
+    # end
+  end
+
   private
 
   def ticket_params

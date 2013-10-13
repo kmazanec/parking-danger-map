@@ -5,7 +5,7 @@ describe TicketsController do
 
   describe "#create" do
 
-    context "user is not logged in" do
+    context "when user is not logged in" do
       before do
         session[:user_id] = nil
       end
@@ -14,13 +14,14 @@ describe TicketsController do
         post :create
         expect(response).to redirect_to('/')
       end
+
       it "should not create a new ticket" do
         expect{ post :create }.not_to change{Ticket.count}
       end
 
     end
 
-    context "user is logged in" do
+    context "when user is logged in" do
       before do
         @user = User.create!(email: "email@email.com", password: "test", password_confirmation: "test")
         session[:user_id] = @user.id
@@ -43,5 +44,30 @@ describe TicketsController do
       end
     end
   end
+
+
+  describe "#update" do
+    let(:location) {FactoryGirl.create(:location)}
+    let(:user) {FactoryGirl.create(:user, id: 1) }
+    let(:ticket) { FactoryGirl.create(:ticket, user_id: 1) }
+    let(:invalid_session){2}
+    let(:valid_session) { user.id }
+
+
+    context "when user is not logged in" do
+      before do
+        session[:user_id] = user
+        put :update, id: ticket
+      end
+
+      it "redirects back to home" do
+        expect(response).to redirect_to('/user')
+      end
+
+    end
+
+
+  end
+
 
 end
