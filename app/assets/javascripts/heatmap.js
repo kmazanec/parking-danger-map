@@ -16,6 +16,32 @@ function convertResponseToLatLong(response){
 
 }
 
+function updateMap(){
+
+  console.log("calling the update map function");
+
+  var bounds = map.getBounds();
+  var northEastCorner = bounds.getNorthEast();
+  var southWestCorner = bounds.getSouthWest();
+  var latitude = northEastCorner.lb;
+  var longitude = northEastCorner.mb;
+  var northEastCoordinates = [northEastCorner.lb, northEastCorner.mb];
+  var southWestCoordinates = [southWestCorner.lb, southWestCorner.mb];
+
+
+  var latitudeLongitudeData = {
+    maxLat: northEastCoordinates[0],
+    maxLong: northEastCoordinates[1],
+    minLat: southWestCoordinates[0],
+    minLong: southWestCoordinates[1]
+  };
+
+  $.post('/map_data_tile', latitudeLongitudeData, function(response) {
+    parkingData = [];
+    convertResponseToLatLong(response);
+  });
+}
+
 
 function initialize() {
   var mapOptions = {
@@ -45,27 +71,24 @@ function initialize() {
     // alert("Lat=" + lat + "; Lng=" + lng);
   });
 
+  moving = null;
+
+  google.maps.event.addListener(map, 'bounds_changed', function(){
+    clearTimeout(moving);
+    console.log("moving, clearing timeout");
+
+  });
+
   google.maps.event.addListener(map, 'idle', function() {
-    var bounds = map.getBounds();
-    var northEastCorner = bounds.getNorthEast();
-    var southWestCorner = bounds.getSouthWest();
-    var latitude = northEastCorner.lb;
-    var longitude = northEastCorner.mb;
-    var northEastCoordinates = [northEastCorner.lb, northEastCorner.mb];
-    var southWestCoordinates = [southWestCorner.lb, southWestCorner.mb];
+
+    console.log("idle, clearing timeout");
+    clearTimeout(moving);
+    moving = setTimeout("updateMap()", 1200);
+    // start waiting
+    // each time, check if it's still idle
+    // once done waiting do this code
 
 
-    var latitudeLongitudeData = {
-      maxLat: northEastCoordinates[0],
-      maxLong: northEastCoordinates[1],
-      minLat: southWestCoordinates[0],
-      minLong: southWestCoordinates[1]
-    };
-
-    $.post('/map_data_tile', latitudeLongitudeData, function(response) {
-      parkingData = [];
-      convertResponseToLatLong(response);
-    });
   });
 }
 
