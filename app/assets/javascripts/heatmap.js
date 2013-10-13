@@ -56,10 +56,10 @@ function initialize() {
 
   parkingData = [];
 
-  $.get('/map_data', function(response){
-    console.log(response);
-    convertResponseToLatLong(response);
-  });
+  // $.get('/map_data', function(response){
+  //   console.log(response);
+  //   convertResponseToLatLong(response);
+  // });
 
 
 

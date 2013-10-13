@@ -17,11 +17,7 @@ class MapsController < ApplicationController
   end
 
   def map_data_tile
-    p "These are the post params ++++++++++++++++++++"
-    p params
-    p "THESE  ARE THE maxlatlong ++++++++++++++"
-    p params[:maxLat]
-    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}")
+    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}").sample(1000)
     p "these are the locations in frame"
     p @locations
      tickets_in_frame = @locations.map do |location|
