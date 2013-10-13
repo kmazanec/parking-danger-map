@@ -1,6 +1,22 @@
 // Adding 500 Data Points
 var map, heatmap;
 
+
+function convertResponseToLatLong(response){
+  for (var i=0; i<response.length; i++){
+    parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1]);
+  }
+  pointArray = new google.maps.MVCArray(parkingData);
+
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: pointArray
+  });
+
+  heatmap.setMap(map);
+
+}
+
+
 function initialize() {
   var mapOptions = {
     zoom: 12,
@@ -12,13 +28,14 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  var pointArray = new google.maps.MVCArray(parkingData);
+  parkingData = [];
 
-  heatmap = new google.maps.visualization.HeatmapLayer({
-    data: pointArray
+  $.get('/map_data', function(response){
+    console.log(response);
+    convertResponseToLatLong(response);
   });
 
-  heatmap.setMap(map);
+
 
   google.maps.event.addListener(map, "click", function(event) {
     var lat = event.latLng.lat();
@@ -28,37 +45,28 @@ function initialize() {
     // alert("Lat=" + lat + "; Lng=" + lng);
   });
 
-  var parkingData = [];
+  google.maps.event.addListener(map, 'idle', function() {
+    var bounds = map.getBounds();
+    var northEastCorner = bounds.getNorthEast();
+    var southWestCorner = bounds.getSouthWest();
+    var latitude = northEastCorner.lb;
+    var longitude = northEastCorner.mb;
+    var northEastCoordinates = [northEastCorner.lb, northEastCorner.mb];
+    var southWestCoordinates = [southWestCorner.lb, southWestCorner.mb];
 
-  $.get('/map_data', function(response){
-    console.log(response);
 
-    // var parkingData =
-        for (var i=0; i<response.length; i++){
-          parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1]);
-        }
+    var latitudeLongitudeData = {
+      maxLat: northEastCoordinates[0],
+      maxLong: northEastCoordinates[1],
+      minLat: southWestCoordinates[0],
+      minLong: southWestCoordinates[1]
+    };
 
-
+    $.post('/map_data_tile', latitudeLongitudeData, function(response) {
+      parkingData = [];
+      convertResponseToLatLong(response);
+    });
   });
-   google.maps.event.addListener(map, 'idle', function() {
-          var bounds = map.getBounds();
-          var northEastCorner = bounds.getNorthEast();
-          var southWestCorner = bounds.getSouthWest();
-          var latitude = northEastCorner.lb;
-          var longitude = northEastCorner.mb;
-          var northEastCoordinates = [northEastCorner.lb, northEastCorner.mb];
-          var southWestCoordinates = [southWestCorner.lb, southWestCorner.mb];
-
-          var latitudeLongitudeData = {
-            maxLat: northEastCoordinates[0],
-            maxLong: northEastCoordinates[1],
-            minLat: southWestCoordinates[0],
-            minLong: southWestCoordinates[1]};
-          $.post('/map_data_tile', latitudeLongitudeData, function(){
-
-          });
-
-         });
 }
 
 
