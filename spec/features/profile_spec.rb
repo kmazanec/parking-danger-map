@@ -2,13 +2,16 @@ require 'spec_helper'
 
 describe "User#Show" do
 
-  context 'when not signed in'
+  context 'when not signed in' do
+    it "tells the user to sign in" do
+      visit user_path(1)
+      expect(page).to have_content("Please log in")
+    end
+  end
 
   context 'when signed in' do 
-      
-      @user = User.create({email: 'test@mail.com', password: 'test', password_confirmation: 'test'})
-
     before :each do
+      @user = User.create({email: 'test@mail.com', password: 'test', password_confirmation: 'test'})
       visit root_path
       log_in_with 'test@mail.com', 'test'
     end
@@ -25,7 +28,7 @@ describe "User#Show" do
       end
     end
 
-    context 'with tickets associated' do
+    context 'when tickets exist' do
       before do
         visit root_path
         create_ticket_with('East 74th Street and Lexington Ave', '10/10/2013', '100', 'Officer Taco', 'Unpaid', @user.email)
@@ -36,10 +39,6 @@ describe "User#Show" do
         visit user_path(@user)
         expect(page).to have_css(".ticket", count: 2)
       end
-
-      describe
-      subject { visit user_path(@user) }
-      it {
 
       context 'displays ticket information' do
         before do
@@ -70,15 +69,6 @@ describe "User#Show" do
     end
   end
 
-
-
-
-  context 'with no user signed in' do
-    it "shows the homepage with an error message" do
-      visit user_path(3)
-      expect(page).to have_content("Please log in")
-    end
-  end
 
 
   
