@@ -1,32 +1,42 @@
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
+<div class"row">
+  <div class=" col-md-3 well ticket_form">
+    <div id="ticket_form">
+      <%= form_for @ticket do |f| %>
+      <div class="form-group">
+        <%= label_tag :location, "Location (address or cross street)" %>
+        <%= text_field_tag :location, nil, required: true, class: "form-control input-sm", placeholder: "required" %>
+     </div>
+      <div class="form-group">
+        <%= f.label :issued_at, "When did they write this ticket?" %>
+        <%= f.date_field :issued_at, class: "form-control input-sm" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :fine, "What's the damage? (how deep?)" %>
+        <%= f.text_field :fine, class: "form-control input-sm ", placeholder: "optional" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :officer, "Who wrote the ticket? (that jerk)" %>
+        <%= f.text_field :officer, class: "form-control input-sm", placeholder: "optional" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :status, "What is the status of your ticket?" %>
+        <%= f.select :status, ["Unpaid", "Contested", "Paid", "Resolved"], {}, class: "form-control input-sm"  %>
+      </div>
+      <div class="form-group">
+        <%= f.label :email, "Email" %><br>
+        <%= email_field_tag :email, nil, class: "form-control input-sm",placeholder: "optional" %>
+      </div>
+        <%= f.submit nil, class: "btn btn-default btn-sm" %>
+      <% end -%>
+    </div>
+  </div>
 
-<div id="map-canvas">
+  <div class= "col-md-8 well">
+    <div id= "map-canvas">
 
-</div>
-
-
-<div id="ticket_form">
-<%= form_for @ticket do |f| %>
-  <%= label_tag :location, "Location (address or cross street)" %>
-  <%= text_field_tag :location, nil, required: true, placeholder: "required" %>
-
-  <%= f.label :issued_at, "When did they write this ticket?" %>
-  <%= f.date_field :issued_at %>
-
-  <%= f.label :fine, "What's the damage? (how deep?)" %>
-  <%= f.text_field :fine, placeholder: "optional" %>
-
-  <%= f.label :officer, "Who wrote the ticket? (that jerk)" %>
-  <%= f.text_field :officer, placeholder: "optional" %>
-
-  <%= f.label :status, "What is the status of your ticket?" %>
-  <%= f.select :status, ["Unpaid", "Contested", "Paid", "Resolved"]  %>
-
-  <%= label_tag :email, "Email" %>
-  <%= email_field_tag :email, nil, placeholder: "optional" %>
-
-  <%= f.submit %>
-<% end -%>
+    </div>
+  </div>
 </div>
