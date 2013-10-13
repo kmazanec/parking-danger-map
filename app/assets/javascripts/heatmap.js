@@ -42,12 +42,19 @@ function initialize() {
   });
    google.maps.event.addListener(map, 'idle', function() {
           var bounds = map.getBounds();
-          var ne = bounds.getNorthEast();
-          var latitude = ne.lb;
-          var longitude = ne.mb;
-          var latitudeLongitudeData =  { lat: latitude, long: longitude };
+          var northEastCorner = bounds.getNorthEast();
+          var southWestCorner = bounds.getSouthWest();
+          var latitude = northEastCorner.lb;
+          var longitude = northEastCorner.mb;
+          var northEastCoordinates = [northEastCorner.lb, northEastCorner.mb];
+          var southWestCoordinates = [southWestCorner.lb, southWestCorner.mb];
+
+          var latitudeLongitudeData = {
+            maxLat: northEastCoordinates[0],
+            maxLong: northEastCoordinates[1],
+            minLat: southWestCoordinates[0],
+            minLong: southWestCoordinates[1]};
           $.post('/map_data_tile', latitudeLongitudeData, function(){
-            console.log("here we are");
 
           });
 

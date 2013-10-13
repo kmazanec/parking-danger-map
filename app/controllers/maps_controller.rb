@@ -8,18 +8,27 @@ class MapsController < ApplicationController
     # remember to add a route for this get request
     p "these are the params ++++++++++++++++++"
     p params
-    # @locations = Location.where("latitude < #{params[ne:[0]]} AND latitude > #{params[sw:[0]]} AND longitude > #{params[ne:[1]]} AND longitude < #{params[sw:[1]]}")
+    @locations = Location.limit(500)
 
-    # dataPoints = @locations.map do |location|
-    #   [location.latitude, location.longitude]
-    # end
-    # render :json => dataPoints.to_json
+    dataPoints = @locations.map do |location|
+      [location.latitude, location.longitude]
+    end
+    render :json => dataPoints.to_json
   end
 
   def map_data_tile
     p "These are the post params ++++++++++++++++++++"
     p params
-    Location.create(latitude: params[:latitu])
+    p "THESE  ARE THE maxlatlong ++++++++++++++"
+    p params[:maxLat]
+    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}")
+    p "these are the locations in frame"
+    p @locations
+     tickets_in_frame = @locations.map do |location|
+      [location.latitude, location.longitude]
+    end
+    render :json => tickets_in_frame.to_json
+
   end
 
 end
