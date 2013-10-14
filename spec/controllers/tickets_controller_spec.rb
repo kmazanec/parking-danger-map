@@ -47,25 +47,61 @@ describe TicketsController do
 
 
   describe "#update" do
-    let(:location) {FactoryGirl.create(:location)}
+    let(:location) {FactoryGirl.create(:location, id: 1)}
     let(:user) {FactoryGirl.create(:user, id: 1) }
-    let(:ticket) { FactoryGirl.create(:ticket, user_id: 1) }
-    let(:invalid_session){2}
+    let(:user2) {FactoryGirl.create(:user, id: 2)}
+    let(:test_ticket) { FactoryGirl.create(:ticket, user_id: user.id, id: 1) }
+    let(:invalid_session){ user2.id }
     let(:valid_session) { user.id }
 
 
     context "when user is not logged in" do
       before do
-        session[:user_id] = user
-        put :update, id: ticket
+        session[:user_id] = nil
+        put :update, id: test_ticket
       end
 
       it "redirects back to home" do
-        expect(response).to redirect_to('/user')
+        expect(response).to redirect_to('/')
+      end
+
+      it "sets the flash error" do
+        expect(flash[:notice]).to eq("Please log in or sign up in order to view that page.")
       end
 
     end
 
+    context "when user is logged in" do
+      before do
+        session[:user_id] = valid_session
+      end
+
+      context "valid attributes" do
+
+        it "updates the ticket attributes" do
+          expect { 
+            put :update, id: test_ticket.id, ticket: {status: "paid"} 
+            test_ticket.reload.status
+          }.to change(test_ticket, :status).to("paid")
+        end
+
+        it "redirects to user profile page" do
+          put :update, id: test_ticket, ticket: {status: "paid"}
+          expect(response).to redirect_to(user_path(user))
+        end
+
+      end
+      
+      context "invalid attributes" do
+
+        # it "returns an error message" do
+        #   put :update, id: test_ticket, ticket: {fine: 10}
+        #   expect(flash[:notice]).to eq("Your update was unsuccesful, please try again.")
+        # end
+
+      end
+    
+    end
 
   end
 
