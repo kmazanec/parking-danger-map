@@ -4,13 +4,11 @@
   <td>$<%= ticket.fine %> &nbsp;&nbsp;&nbsp;</td>
   <td><%= ticket.officer %> &nbsp;&nbsp;&nbsp;</td>
   <td><%= ticket.status %> &nbsp;&nbsp;&nbsp;</td>
-  <%= form_for ticket, url: ticket_path do |f| %>
+<%= form_for ticket, url: ticket_path(ticket) do |f| %>
   <td><%= f.select :status, ["Unpaid", "Contested", "Paid", "Resolved"]  %></td>
   <td><%= f.submit %></td>
-  <% end %>
+<% end %>
   <td><%= link_to 'Delete Ticket', ticket_path(ticket),
                method: :delete,
-               data: { confirm: 'Are you sure?' } %></td>
-
-
+               data: { confirm: 'Please confirm you would like to delete this ticket' } %></td>
 </tr>

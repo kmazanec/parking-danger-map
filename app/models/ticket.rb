@@ -4,4 +4,5 @@ class Ticket < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :location_id, presence: true
+  validates :issued_at, presence: true
 end

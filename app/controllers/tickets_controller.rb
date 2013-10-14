@@ -25,6 +25,8 @@ class TicketsController < ApplicationController
       begin
         @ticket = current_user.tickets.find(params[:id])
         @ticket.update_attributes(update_params)
+      rescue ActiveRecord::RecordNotFound
+        flash[:notice] = "We were not able to find that record. Please try again"
       ensure
         redirect_to (user_path(current_user))
       end
@@ -38,6 +40,8 @@ class TicketsController < ApplicationController
       begin
         @ticket = current_user.tickets.find(params[:id])
         @ticket.destroy
+      rescue ActiveRecord::RecordNotFound
+        flash[:notice] = "We were not able to find that record. Please try again"
       ensure
         redirect_to (user_path(current_user))
       end
