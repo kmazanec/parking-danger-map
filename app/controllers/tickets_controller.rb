@@ -31,6 +31,19 @@ class TicketsController < ApplicationController
     end
   end
 
+  def destroy
+    if !logged_in?
+      redirect_to :root
+    else
+      begin
+        @ticket = current_user.tickets.find(params[:id])
+        @ticket.destroy
+      ensure
+        redirect_to (user_path(current_user))
+      end
+    end
+  end
+
   private
 
   def ticket_params

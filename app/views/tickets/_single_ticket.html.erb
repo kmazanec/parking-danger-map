@@ -6,9 +6,11 @@
   <td><%= ticket.status %> &nbsp;&nbsp;&nbsp;</td>
   <%= form_for ticket, url: ticket_path do |f| %>
   <td><%= f.select :status, ["Unpaid", "Contested", "Paid", "Resolved"]  %></td>
-
   <td><%= f.submit %></td>
   <% end %>
+  <td><%= link_to 'Delete Ticket', ticket_path(ticket),
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %></td>
 
 
 </tr>
