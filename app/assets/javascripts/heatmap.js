@@ -114,7 +114,7 @@ function initialize() {
 
   google.maps.event.addListener(map, 'idle', function() {
     clearTimeout(moving);
-    moving = setTimeout("updateMap()", 1200);
+    moving = setTimeout("updateMap()", 1050);
   });
 
   var homeControlDiv = document.createElement('div');
