@@ -18,7 +18,7 @@ if ENV['SEED_DATA'] == 'set1'
 
   puts "Importing records in chucnks of #{chunk_size}"
 
-  current_number = 10000
+  current_number = 20000
 
   puts db.execute "SELECT * FROM sqlite_master WHERE type='table'"
 
