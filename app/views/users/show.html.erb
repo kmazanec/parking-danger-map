@@ -6,7 +6,7 @@
   <p><%= "You currently do not have any tickets" %></p>
   <a href="<%= root_path %>">Create a new ticket!</a>
 <% else %>
-  <table>
+  <table class="table table-striped">
     <% if flash[:notice] %>
       <p><%= flash[:notice] %></p>
     <% end %>

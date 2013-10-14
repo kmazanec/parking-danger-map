@@ -16,3 +16,8 @@
 .ticket_form{
 margin-left: 15px;  
 }
+
+ p.navbar-text {
+  width: 100%;
+  text-align: center;
+}
