@@ -10,27 +10,44 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+ <nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"># Parking Ticket Danger</a>
+  </div>
 
-  <nav>
-  <ul>
-  <% if current_user %>
-    <li><%= link_to "Logout", logout_path(current_user.id), method: :delete %></li>
-    <li><%= link_to "Profile", user_path(current_user.id) %></li>
-    <li><%= link_to "Home", root_url %></li>
-    <% else %>
-    <li><%= link_to '<button type="button" id="signup">Sign up</button>'.html_safe, signup_path %></li>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
     
+    <% if current_user %>
+    <ul class="nav navbar-nav navbar-right">
+      <li><%= link_to "Logout", logout_path(current_user.id), method: :delete %></li>
+      <li><%= link_to "Profile", user_path(current_user.id) %></li>
+      <li><%= link_to "Home", root_url %></li> 
     
-    <li><div class="form">
-        <%= form_tag login_path do %>
-          <%= email_field_tag :email %>
-          <%= password_field_tag :password %>
-          <%= submit_tag "Log in"%>
-        <% end %>
-      </div> </li>
-  <% end %>
+   
     
-  </ul>
+    </ul>
+       <% else %>
+    <%= form_tag login_path, class: "form-inline navbar-form navbar-right " do %>
+        <div class="form-group">
+          <%= email_field_tag :email, nil, class: "form-control input-sm navbar_form",  placeholder: "JaneDoe@mail.com"  %>
+        </div>    
+
+        <div class="form-group">
+          <%= password_field_tag :password, nil, class: "form-control input-sm navbar_form", placeholder: "Password" %>
+        </div>
+            <%= submit_tag "Log in", class: "btn btn-default btn-sm" %>&nbsp;
+     <%= link_to "or Register!", signup_path, class: "link" %>
+     <% end %> 
+    <% end %>
+  </div><!-- /.navbar-collapse -->
 </nav>
 
 <%= yield %>
