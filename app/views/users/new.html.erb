@@ -1,20 +1,35 @@
-<h3> Create new user <h3>
+ <div class= "container">
+  
+  <div class= "col-md-4 well col-md-offset-4">
+    <h2> Join Us </h2>
 
-<%= form_for :user, url: users_path do |f| %>
-    <%= f.label :email %><br>
-    <%= f.email_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br>
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </p>
+  <%= form_for :user, class: " form-horizontal", role:"form", url: users_path do |f| %>
+      <div class="form-group">
+        <%= f.label :email, class: "col-lg-2 control-label" %>
+        <div class="col-lg-4">  
+        <%= f.email_field :email, class: "form-control", id: "inputEmail1", placeholder: "Email" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, class: "col-lg-2 control-label" %>
+        <div class="col-lg-4">
+        <%= f.password_field :password, class: "form-control", id: "inputPassword1", placeholder:"Password" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: "col-lg-2 control-label" %>
+        <div class="col-lg-4">
+        <%= f.password_field :password_confirmation, class: "form-control", id: "inputPassword1", placeholder:"Password"  %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-offset-3 col-lg-6">
+        <%= f.submit class: "btn btn-default btn-sm" %>
+        </div>
+      </div>
+  <% end %>
+ </div>
+</div>
 
 
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>

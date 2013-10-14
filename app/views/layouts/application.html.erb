@@ -27,6 +27,7 @@
     
     <% if current_user %>
     <ul class="nav navbar-nav navbar-right">
+      <li class="navbar-text ">Welcome <%=current_user.email%></li>
       <li><%= link_to "Logout", logout_path(current_user.id), method: :delete %></li>
       <li><%= link_to "Profile", user_path(current_user.id) %></li>
       <li><%= link_to "Home", root_url %></li> 
@@ -51,6 +52,10 @@
 </nav>
 
 <%= yield %>
-
+<div class= "navbar navbar-default navbar-fixed-bottom">
+  <div class = "container" >
+    <p class = "navbar-text ">#Parking Tickets Danger - ©2013 # Foreign Objects ‎ - Terms of Use - Privacy </p>
+  </div>
+</div>
 </body>
 </html>
