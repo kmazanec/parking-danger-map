@@ -25,9 +25,15 @@ class MapsController < ApplicationController
   end
 
   def map_data_tickets
-    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}")
+    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}").limit(100)
     tickets_in_frame = @locations.map do |location|
-      [location.latitude, location.longitude]
+      @current_ticket = Ticket.find_by(location_id: location.id)
+      current_ticket_html = "<h4>#{@current_ticket.issued_at.strftime('%a. %b %-d, %Y')}</h4>
+                              <b>Violation:</b> #{@current_ticket.violation}<br>
+                              <b>Fine:</b> #{@current_ticket.fine}<br>
+                              <b>Status:</b> #{@current_ticket.status}<br>
+                              <b>Officer:</b> #{@current_ticket.officer}"
+      [location.latitude, location.longitude, @current_ticket.violation, current_ticket_html]
     end
 
     render :json => tickets_in_frame.to_json

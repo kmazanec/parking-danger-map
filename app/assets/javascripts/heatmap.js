@@ -5,13 +5,23 @@ var home = new google.maps.LatLng(40.7833, -73.9667);
 var my_location = new google.maps.LatLng(40.7833, -73.9667);
 
 
-function convertResponseToLatLong(response){
+function displayResponseToLatLong(response){
   for (var i=0; i<response.length; i++){
     parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1]);
   }
   pointArray = new google.maps.MVCArray(parkingData);
   heatmap.setData(pointArray);
   heatmap.setMap(map);
+}
+
+function displayResponseToTickets(response){
+  var ticket_location, ticket_title, ticket_content;
+  for (var i=0; i<response.length; i++){
+    ticket_location = new google.maps.LatLng(response[i][0], response[i][1]);
+    ticket_title = response[i][2];
+    ticket_content = response[i][3];
+    addInfoMarker(ticket_title, ticket_content, ticket_location);
+  }
 }
 
 function updateMap(){
@@ -31,10 +41,17 @@ function updateMap(){
     minLong: southWestCoordinates[1]
   };
 
-  $.post('/map_data_tile', latitudeLongitudeData, function(response) {
-    parkingData = [];
-    convertResponseToLatLong(response);
-  });
+  if (map.zoom >= 16) {
+    $.post('/map_data_tickets', latitudeLongitudeData, function(response){
+      parkingData = [];
+      displayResponseToTickets(response);
+    });
+  } else {
+    $.post('/map_data_tile', latitudeLongitudeData, function(response) {
+      parkingData = [];
+      displayResponseToLatLong(response);
+    });
+  }
 }
 
 function HomeControl(controlDiv, map, label, new_location) {
@@ -93,7 +110,7 @@ function addInfoMarker(titleString, contentString, positionCoords){
   var marker = new google.maps.Marker({
       position: positionCoords,
       map: map,
-      title: 'titleString'
+      title: titleString
   });
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
@@ -156,9 +173,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
-// function toggleHeatmap() {
-//   heatmap.setMap(heatmap.getMap() ? null : map);
-// }
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
+}
 
 function changeGradient() {
   var gradient = [
