@@ -17,7 +17,7 @@ class MapsController < ApplicationController
   end
 
   def map_data_tile
-    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}").sample(1000)
+    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}").sample(1200)
     p "these are the locations in frame"
     p @locations
      tickets_in_frame = @locations.map do |location|
