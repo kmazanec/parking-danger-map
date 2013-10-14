@@ -18,13 +18,19 @@ class MapsController < ApplicationController
 
   def map_data_tile
     @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}").sample(1200)
-    p "these are the locations in frame"
-    p @locations
      tickets_in_frame = @locations.map do |location|
       [location.latitude, location.longitude]
     end
     render :json => tickets_in_frame.to_json
+  end
 
+  def map_data_tickets
+    @locations = Location.where("latitude < #{params[:maxLat]} AND latitude > #{params[:minLat]} AND longitude > #{params[:minLong]} AND longitude < #{params[:maxLong]}")
+    tickets_in_frame = @locations.map do |location|
+      [location.latitude, location.longitude]
+    end
+
+    render :json => tickets_in_frame.to_json
   end
 
 end

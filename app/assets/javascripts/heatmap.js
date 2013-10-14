@@ -2,6 +2,7 @@
 var map, heatmap, parkingData;
 var pointArray = [];
 var home = new google.maps.LatLng(40.7833, -73.9667);
+var my_location = new google.maps.LatLng(40.7833, -73.9667);
 
 
 function convertResponseToLatLong(response){
@@ -9,17 +10,11 @@ function convertResponseToLatLong(response){
     parkingData[i] = new google.maps.LatLng(response[i][0], response[i][1]);
   }
   pointArray = new google.maps.MVCArray(parkingData);
-
   heatmap.setData(pointArray);
-
   heatmap.setMap(map);
-
 }
 
 function updateMap(){
-
-  console.log("calling the update map function");
-
   var bounds = map.getBounds();
   var northEastCorner = bounds.getNorthEast();
   var southWestCorner = bounds.getSouthWest();
@@ -42,7 +37,7 @@ function updateMap(){
   });
 }
 
-function HomeControl(controlDiv, map) {
+function HomeControl(controlDiv, map, label, new_location) {
 
   // Set CSS styles for the DIV containing the control
   // Setting padding to 5 px will offset the control
@@ -53,7 +48,7 @@ function HomeControl(controlDiv, map) {
   var controlUI = document.createElement('div');
   controlUI.style.backgroundColor = 'white';
   controlUI.style.borderStyle = 'solid';
-  controlUI.style.borderWidth = '2px';
+  controlUI.style.borderWidth = '1px';
   controlUI.style.cursor = 'pointer';
   controlUI.style.textAlign = 'center';
   controlUI.title = 'Click to set the map to Home';
@@ -65,23 +60,52 @@ function HomeControl(controlDiv, map) {
   controlText.style.fontSize = '12px';
   controlText.style.paddingLeft = '4px';
   controlText.style.paddingRight = '4px';
-  controlText.innerHTML = '<b>Home</b>';
+  controlText.innerHTML = label;
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply set the map to
-  // Chicago
+  // Setup the click event listeners: simply set the map to home
   google.maps.event.addDomListener(controlUI, 'click', function() {
-    map.setCenter(home);
+    map.setCenter(new_location);
   });
 
 }
 
+function locateMe(){
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      my_location = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+    },function() {
+      my_location = new google.maps.LatLng(40.7833, -73.9667);
+    });
+  }
+  else {
+    my_location = new google.maps.LatLng(40.7833, -73.9667);
+  }
+}
+
+
+function addInfoMarker(titleString, contentString, positionCoords){
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString,
+      maxWidth: 200
+  });
+
+  var marker = new google.maps.Marker({
+      position: positionCoords,
+      map: map,
+      title: 'titleString'
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+  });
+}
 
 
 function initialize() {
+  locateMe();
   var mapOptions = {
     zoom: 12,
-    center: home,
+    center: my_location,
     mapTypeId: google.maps.MapTypeId.MAP
   };
 
@@ -101,9 +125,7 @@ function initialize() {
   google.maps.event.addListener(map, "click", function(event) {
     var lat = event.latLng.lat();
     var lng = event.latLng.lng();
-    // populate yor box/field with lat, lng
     $("#location").val(lat + '; ' + lng);
-    // alert("Lat=" + lat + "; Lng=" + lng);
   });
 
   moving = null;
@@ -114,15 +136,18 @@ function initialize() {
 
   google.maps.event.addListener(map, 'idle', function() {
     clearTimeout(moving);
-    moving = setTimeout("updateMap()", 1050);
+    moving = setTimeout("updateMap()", 750);
   });
 
   var homeControlDiv = document.createElement('div');
-  var homeControl = new HomeControl(homeControlDiv, map);
-
+  var homeControl = new HomeControl(homeControlDiv, map, "Locate Me", my_location);
   homeControlDiv.index = 1;
   map.controls[google.maps.ControlPosition.TOP_RIGHT].push(homeControlDiv);
 
+  var nycControlDiv = document.createElement('div');
+  var nycControl = new HomeControl(nycControlDiv, map, "NYC", home);
+  nycControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(nycControlDiv);
 
 }
 

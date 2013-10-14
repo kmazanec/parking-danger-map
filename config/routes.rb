@@ -5,6 +5,7 @@ ParkingDangerMap::Application.routes.draw do
   get '/map_data' => 'maps#map_data'
   get '/signup' => 'users#new'
   post 'map_data_tile' => 'maps#map_data_tile'
+  post 'map_data_tickets' => 'maps#map_data_tickets'
 
 
   root 'maps#index'
