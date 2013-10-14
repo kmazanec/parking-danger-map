@@ -1,13 +1,29 @@
 <% if current_user %>
   <h3><%= current_user.email %></h3>
 <% end %>
+
 <% if current_user.tickets.empty? %>
-<p><%= "You currently do not have any tickets" %></p>
-<a href="<%= root_path %>">Create a new ticket!</a>
+  <p><%= "You currently do not have any tickets" %></p>
+  <a href="<%= root_path %>">Create a new ticket!</a>
 <% else %>
-<ul>
-<% current_user.tickets.each do |ticket| %>
-  <li><%= render partial: "tickets/single_ticket", locals: {ticket: ticket} %></li>
+  <table>
+    <% if flash[:notice] %>
+      <p><%= flash[:notice] %></p>
+    <% end %>
+    <tr>
+    <td>Ticket Location</td>
+    <td>Date Issued</td>
+    <td>Fine Amount</td>
+    <td>Issuing Officer</td>
+    <td>Status</td>
+    <td>Update Status</td>
+    <!-- <td>Delete Ticket</td> -->
+    </tr>
+    <% current_user.tickets.each do |ticket| %>
+      <%= render partial: "tickets/single_ticket", locals: {ticket: ticket} %>
+    <% end %>
+  </table>
 <% end %>
-</ul>
-<% end %>
+
+
+

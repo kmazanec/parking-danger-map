@@ -1,8 +1,15 @@
 require 'spec_helper'
 
-describe "Profile Page" do
+describe "User#Show" do
 
-  context 'with a user signed in' do 
+  context 'when not signed in' do
+    it "tells the user to sign in" do
+      visit user_path(1)
+      expect(page).to have_content("Please log in")
+    end
+  end
+
+  context 'when signed in' do 
     before :each do
       @user = User.create({email: 'test@mail.com', password: 'test', password_confirmation: 'test'})
       visit root_path
@@ -21,7 +28,7 @@ describe "Profile Page" do
       end
     end
 
-    context 'with tickets associated' do
+    context 'when tickets exist' do
       before do
         visit root_path
         create_ticket_with('East 74th Street and Lexington Ave', '10/10/2013', '100', 'Officer Taco', 'Unpaid', @user.email)
@@ -62,15 +69,6 @@ describe "Profile Page" do
     end
   end
 
-
-
-
-  context 'with no user signed in' do
-    it "shows the homepage with an error message" do
-      visit user_path(3)
-      expect(page).to have_content("Please log in")
-    end
-  end
 
 
   
