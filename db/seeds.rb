@@ -36,9 +36,15 @@ if ENV['SEED_DATA'] == 'set1'
 
 else
   require 'csv'
-
-  CSV.foreach('db/nyc_parkingdata.csv') do |row|
-    Location.create(user_submission: "#{row[11]} #{row[12]}, New York, NY")
+  tickets_csv = CSV.open("db/parking_tickets.csv")
+#	current_batch = (2..25)
+	tickets_csv.each_with_index  do |row, i|
+    if i > 2 && i < 25
+    loc = Location.create(user_submission: "#{row[10]} #{row[11]}, New York, NY")
+		Ticket.create(user_id: 1, location_id: loc.id, issued_at: row[4].to_datetime, fine: row[7].strip.to_i, violation: row[5].squeeze(" ") )
+		p row[10]
+		p row[11]
+		end
   end
 
 
