@@ -27,8 +27,9 @@ if ENV['SEED_DATA'] == 'set1'
     puts "Importing record #{current_number + 10} of #{number_of_rows} (#{(current_number.to_f/number_of_rows.to_f).round(3)*100}% done)"
     results =  (db.execute "SELECT * FROM #{table} LIMIT #{chunk_size} OFFSET #{current_number}")
     results.each do |row|
-      loc = Location.create(user_submission: "#{row[10].strip} #{row[11].strip}, New York, NY")
-      Ticket.create(user_id: 1, location_id: loc.id, issued_at: row[4].strip.to_datetime, fine: row[7].strip.to_i, violation: row[5].squeeze(" ") )
+#      loc = Location.create(user_submission: "#{row[10].strip} #{row[11].strip}, New York, NY")
+#      Ticket.create(user_id: 1, location_id: loc.id, issued_at: row[4].strip.to_datetime, fine: row[7].strip.to_i, violation: row[5].squeeze(" ") )
+		
     end
     current_number += chunk_size
 
@@ -38,15 +39,12 @@ else
   require 'csv'
   tickets_csv = CSV.open("db/parking_tickets.csv")
 #	current_batch = (2..25)
-	tickets_csv.each_with_index  do |row, i|
-    if i > 2 && i < 25
-    loc = Location.create(user_submission: "#{row[10]} #{row[11]}, New York, NY")
-		Ticket.create(user_id: 1, location_id: loc.id, issued_at: row[4].to_datetime, fine: row[7].strip.to_i, violation: row[5].squeeze(" ") )
-		p row[10]
-		p row[11]
-		end
-  end
-
-
+	tickets_csv.drop(6930).each do |row|
+   # if i > 2 && i < 5000
+    loc = Location.create(user_submission: "#{row[10].strip} #{row[11].strip}, New York, NY")
+  	Ticket.create(user_id: 1, location_id: loc.id, issued_at: row[4].to_datetime, fine: row[7].strip.to_i, violation: row[5].squeeze(" ") )
+		puts "#{row[10]}, #{row[11]}"
+	end
 end
+
 
