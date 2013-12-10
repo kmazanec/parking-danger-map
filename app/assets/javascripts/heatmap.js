@@ -28,10 +28,10 @@ function updateMap(){
   var bounds = map.getBounds();
   var northEastCorner = bounds.getNorthEast();
   var southWestCorner = bounds.getSouthWest();
-  var latitude = northEastCorner.ob;
-  var longitude = northEastCorner.pb;
-  var northEastCoordinates = [northEastCorner.ob, northEastCorner.pb];
-  var southWestCoordinates = [southWestCorner.ob, southWestCorner.pb];
+  var latitude = northEastCorner.nb;
+  var longitude = northEastCorner.ob;
+  var northEastCoordinates = [northEastCorner.nb, northEastCorner.ob];
+  var southWestCoordinates = [southWestCorner.nb, southWestCorner.ob];
 
 
   var latitudeLongitudeData = {
